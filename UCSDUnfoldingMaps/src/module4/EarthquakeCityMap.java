@@ -20,8 +20,8 @@ import processing.core.PApplet;
 /** EarthquakeCityMap
  * An application with an interactive map displaying earthquake data.
  * Author: UC San Diego Intermediate Software Development MOOC team
- * @author Your name here
- * Date: July 17, 2015
+ * @author Chen Zhou
+ * Date: May 30, 2023
  * */
 public class EarthquakeCityMap extends PApplet {
 	
@@ -135,23 +135,43 @@ public class EarthquakeCityMap extends PApplet {
 		// Remember you can use Processing's graphics methods here
 		fill(255, 250, 240);
 		rect(25, 50, 150, 250);
+		strokeWeight(2);
 		
 		fill(0);
 		textAlign(LEFT, CENTER);
 		textSize(12);
 		text("Earthquake Key", 50, 75);
 		
-		fill(color(255, 0, 0));
-		ellipse(50, 125, 15, 15);
+		fill(color(160, 32, 240));
+		triangle(50, 115, 55, 106, 60, 115); //City Marker
+		fill(color(255, 255, 255));
+		ellipse(55, 135, 10, 10); //Land Quake
+		fill(color(255, 255, 255));
+		rect(50, 155, 10, 10); //Ocean Quake
+		
 		fill(color(255, 255, 0));
-		ellipse(50, 175, 10, 10);
+		ellipse(55, 215, 10, 10);
 		fill(color(0, 0, 255));
-		ellipse(50, 225, 5, 5);
+		ellipse(55, 235, 10, 10);
+		fill(color(255, 0, 0));
+		ellipse(55, 255, 10, 10);
+		
+		fill(color(255, 255, 255));
+		ellipse(55, 275, 10, 10);
+		line(45, 285, 65, 265);
+		line(45, 265, 65, 285);
+		
 		
 		fill(0, 0, 0);
-		text("5.0+ Magnitude", 75, 125);
-		text("4.0+ Magnitude", 75, 175);
-		text("Below 4.0", 75, 225);
+		text("City Marker", 75, 110);
+		text("Land Quake", 75, 135);
+		text("Ocean Quake", 75, 160);
+		text("Size ~ Magnitude", 50, 185);
+		
+		text("Shallow", 75, 215);
+		text("Intermediate", 75, 235);
+		text("Deep", 75, 255);
+		text("Past Day", 75, 275);
 	}
 
 	
@@ -170,7 +190,9 @@ public class EarthquakeCityMap extends PApplet {
 		// If isInCountry ever returns true, isLand should return true.
 		for (Marker m : countryMarkers) {
 			// TODO: Finish this method using the helper method isInCountry
-			
+			if (isInCountry(earthquake, m)) {
+				return true;
+			}
 		}
 		
 		
@@ -210,8 +232,25 @@ public class EarthquakeCityMap extends PApplet {
 		//  * If you know your Marker, m, is a LandQuakeMarker, then it has a "country" 
 		//      property set.  You can get the country with:
 		//        String country = (String)m.getProperty("country");
-		
-		
+		for (Marker cm : countryMarkers) {
+			String name = (String)cm.getProperty("name");
+			int quakeNum = 0;
+			for (Marker qm: quakeMarkers) {
+				if ((qm instanceof LandQuakeMarker) && name.equals(((LandQuakeMarker)qm).getCountry())) {
+					quakeNum ++;
+				}
+			}
+			if (quakeNum != 0) {
+			System.out.println(name + ": " + quakeNum);
+			}
+        }
+		int oceanQuakeNum = 0;
+		for (Marker qm: quakeMarkers) {
+			if (qm instanceof OceanQuakeMarker) {
+				oceanQuakeNum ++;
+			}
+		}
+		System.out.println("OCEAN QUAKES: " + oceanQuakeNum);
 	}
 	
 	
