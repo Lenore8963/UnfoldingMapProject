@@ -20,7 +20,7 @@ import processing.core.PApplet;
 /** EarthquakeCityMap
  * An application with an interactive map displaying earthquake data.
  * Author: UC San Diego Intermediate Software Development MOOC team
- * @author Your name here
+ * @author Chen Zhou
  * Date: July 17, 2015
  * */
 public class EarthquakeCityMap extends PApplet {
@@ -146,6 +146,17 @@ public class EarthquakeCityMap extends PApplet {
 	private void selectMarkerIfHover(List<Marker> markers)
 	{
 		// TODO: Implement this method
+		if (lastSelected != null) {
+			return;
+		}
+			
+		for (Marker marker : markers) {
+			if (marker.isInside(map, mouseX, mouseY)) {
+				lastSelected = (CommonMarker)marker;
+				lastSelected.setSelected(true);
+				break;
+			}
+		}
 	}
 	
 	/** The event handler for mouse clicks
@@ -159,6 +170,65 @@ public class EarthquakeCityMap extends PApplet {
 		// TODO: Implement this method
 		// Hint: You probably want a helper method or two to keep this code
 		// from getting too long/disorganized
+		if (lastClicked != null) {
+	        unhideMarkers();
+	        lastClicked = null;
+	    } else {
+	        Marker clickedMarker = null;
+	        for (Marker marker : cityMarkers) {
+	            if (marker.isInside(map, mouseX, mouseY)) {
+	                clickedMarker = marker;
+	                break;
+	            }
+	        }
+
+	        if (clickedMarker == null) {
+	            for (Marker marker : quakeMarkers) {
+	                if (marker.isInside(map, mouseX, mouseY)) {
+	                    clickedMarker = marker;
+	                    break;
+	                }
+	            }
+	        }
+
+	        if (clickedMarker != null) {
+	            lastClicked = (CommonMarker) clickedMarker;
+
+	            // Hide all markers
+	            for (Marker marker : quakeMarkers) {
+	                marker.setHidden(true);
+	            }
+
+	            for (Marker marker : cityMarkers) {
+	                marker.setHidden(true);
+	            }
+
+	            // Handle city and earthquake markers differently
+	            if (clickedMarker.getClass() == CityMarker.class) {
+	                handleCityClick((CityMarker) clickedMarker);
+	            } else if (clickedMarker.getClass() == EarthquakeMarker.class) {
+	                handleEarthquakeClick((EarthquakeMarker) clickedMarker);
+	            }
+	        }
+	    }
+	}
+
+	private void handleCityClick(CityMarker city) {
+	    for (Marker marker : quakeMarkers) {
+	        EarthquakeMarker quake = (EarthquakeMarker) marker;
+	        if (quake.getDistanceTo(city.getLocation()) < quake.threatCircle()) {
+	            quake.setHidden(false);
+	        }
+	    }
+	}
+
+	private void handleEarthquakeClick(EarthquakeMarker quake) {
+	    for (Marker marker : cityMarkers) {
+	        CityMarker city = (CityMarker) marker;
+	        if (quake.getDistanceTo(city.getLocation()) < quake.threatCircle()) {
+	            city.setHidden(false);
+	        }
+	    }
 	}
 	
 	
