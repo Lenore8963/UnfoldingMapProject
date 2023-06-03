@@ -27,20 +27,24 @@ This project is a great tool for visualizing, analyzing and understanding earthq
 
 ## The AirportMap 
 
-This airport project is a Java-based application that visualizes global airport and flight route data using an interactive map. It is implemented using Processing, a software sketchbook and language for learning how to code within the context of the visual arts, and the Unfolding Maps library, a library for creating interactive maps and geovisualizations.
+This project, in the Java programming language, utilizes the Unfolding Maps library for interactive maps and geovisualizations. Its primary purpose is to visualize and interact with global airport data, focusing specifically on airports that are connected with a selected country through airline routes. In the current implementation, the country of focus is Canada, which is set as a constant in the code.
 
-### Here's a detailed explanation:
+![5](https://github.com/Lenore8963/UnfoldingMapProject/assets/118407314/ae55bbab-0a67-4fc7-9d4f-442a9e2c370c)
 
-1, UnfoldingMap and Markers: The AirportMap class extends PApplet, which is the basic application type for Processing programs. It contains an instance of UnfoldingMap, which is used to display the map, and two Lists to store Marker objects representing airports and routes.
+The program reads from data files containing details about airports and their respective flight routes. This information is then used to create markers on a world map representing airports and the flight routes associated with them.
 
-2, Setup Method: In the setup() method, the map is initialized with a size of 800x600 pixels, and default map interactions (such as panning and zooming) are enabled. It then parses data from "airports.dat" and "routes.dat" files, creating AirportMarker objects for each airport and SimpleLinesMarker objects for each route.
+![8](https://github.com/Lenore8963/UnfoldingMapProject/assets/118407314/4c45c7fd-e331-4f48-aaef-b5884c012143)
 
-3, Airport and Route Parsing: For each airport, a PointFeature object is created. This object represents a geographical point and its associated properties, such as the airport's ID and location. The PointFeature is then used to create an AirportMarker, which is stored in airportList and added to the map. A similar process is followed for routes, creating ShapeFeature objects and then SimpleLinesMarker objects, which are stored in routeList and added to the map. Each route marker is initially hidden.
+The AirportMap class is the primary class of this project. Its setup method reads in the airport and route data, creates markers for each airport, and determines whether each airport has a route to or from the target country, Canada, in this case. If an airport is connected to Canada, its marker is added to the map and the country of the airport is added to a list of countries connected with Canada. Only the airports connected with Canada are displayed on the map, highlighted with a distinct color.
 
-4, Canadian Routes Highlighting: The setup method then iterates over each route marker, checking if the source or destination airport is located in Canada. If so, it sets a property on the corresponding airport marker to indicate that the airport is connected with Canada.
+![6](https://github.com/Lenore8963/UnfoldingMapProject/assets/118407314/eaf7b098-826e-4dd2-a375-7535ea61a03b)
 
-5, Map Drawing: The draw() method, which is called continuously by Processing, clears the screen and redraws the map.
+An interesting feature of this project is its interactivity. When the mouse hovers over an airport marker, it gets highlighted and displays the name and country of the airport. When a marker is clicked, it shows all flight routes originating from that airport. Furthermore, all countries connected with Canada by airport routes are printed out in the console.
 
-6, Mouse Interactions: Mouse interactions are also handled in this class. The mouseMoved() method checks if the mouse is hovering over any airport marker, and if so, it sets that marker as selected. The mouseClicked() method handles mouse clicks. If an airport marker is selected when the mouse is clicked, it displays all route markers originating from that airport.
+![7](https://github.com/Lenore8963/UnfoldingMapProject/assets/118407314/07758020-0773-49fd-b80a-5a222bd71c1a)
 
-In summary, this is an interactive map application that visualizes global airports and their connections. It provides a special highlight for airports that have connections with Canada and allows users to inspect individual airport connections through mouse interactions.
+In summary, this project is a highly interactive data visualization tool that allows users to explore global airport connections with a focus on a specified country. It provides insights into global air traffic patterns and connectivity. It's designed with the flexibility that the target country can be easily changed for exploring connections with different countries.
+
+Apart from Canada, here is another example: Taiwan.
+![tw1](https://github.com/Lenore8963/UnfoldingMapProject/assets/118407314/f6fc3b56-8b34-44c9-abd1-1d59d04166ec)
+![tw2](https://github.com/Lenore8963/UnfoldingMapProject/assets/118407314/00021e87-05f2-496c-acea-9eb58d5b1ae8)
