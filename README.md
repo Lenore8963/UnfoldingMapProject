@@ -45,6 +45,7 @@ An interesting feature of this project is its interactivity. When the mouse hove
 
 In summary, this project is a highly interactive data visualization tool that allows users to explore global airport connections with a focus on a specified country. It provides insights into global air traffic patterns and connectivity. It's designed with the flexibility that the target country can be easily changed for exploring connections with different countries.
 
-Apart from Canada, here is another example: Taiwan.
+### Apart from Canada, here is another example: Taiwan.
+
 ![tw1](https://github.com/Lenore8963/UnfoldingMapProject/assets/118407314/f6fc3b56-8b34-44c9-abd1-1d59d04166ec)
 ![tw2](https://github.com/Lenore8963/UnfoldingMapProject/assets/118407314/00021e87-05f2-496c-acea-9eb58d5b1ae8)
